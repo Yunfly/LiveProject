@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>直播</title>
+</head>
+
+<body>
+    <button id="Login">登陆</button>
+    <button id="fetchUrl">获取直播地址</button>
+
+    <div id="id_video_container" style="width:100%; height:auto;"></div>
+    <script src="//qzonestyle.gtimg.cn/open/qcloud/video/live/h5/live_connect.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        document.getElementById("Login").click = () => {
+            axios('/api/v1/user/login', {
+                method: 'post',
+                data: {
+                    type: "username",
+                    username: "admin",
+                    password: "admin"
+                }
+            })
+        }
+        (function () {
+            var player = new qcVideo.Player("id_video_container", {
+                height: 320,
+                live_url: "http://24058.liveplay.myqcloud.com/live/24058_666_550.m3u8",
+                live_url2: "http://24058.liveplay.myqcloud.com/live/24058_666_900.m3u8",
+                refer: "localhost",
+                width: 480,
+            });
+
+            setInterval(() => {
+                var barrage = [
+                    { "type": "content", "content": "hello world", "time": "1" },
+                    { "type": "content", "content": "刘佳琦", "time": "1", "style": "C64B03;30", "position": "center" }
+                ];
+                player.addBarrage(barrage);
+            },3000)
+        })()
+    </script>
+</body>
+
+</html>
