@@ -70,7 +70,7 @@ function getFlatMenuData(menus) {
 export const getRouterData = app => {
   const routerConfig = {
     '/': {
-      component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
+      component: dynamicWrapper(app, [], () => import('../layouts/BasicLayout')),
     },
     '/exception/403': {
       component: dynamicWrapper(app, [], () => import('../routes/Exception/403')),
@@ -78,25 +78,16 @@ export const getRouterData = app => {
     '/exception/404': {
       component: dynamicWrapper(app, [], () => import('../routes/Exception/404')),
     },
-    '/exception/500': {
-      component: dynamicWrapper(app, [], () => import('../routes/Exception/500')),
+    '/live': {
+      component: dynamicWrapper(app, ['live'], () => import('../routes/Live/index')),
+    },
+    '/:id': {
+      component: dynamicWrapper(app, ['live'], () => import('../routes/LiveRoom/index')),
     },
     '/exception/trigger': {
       component: dynamicWrapper(app, ['error'], () =>
         import('../routes/Exception/triggerException')
       ),
-    },
-    '/user': {
-      component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
-    },
-    '/user/login': {
-      component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
-    },
-    '/user/register': {
-      component: dynamicWrapper(app, ['register'], () => import('../routes/User/Register')),
-    },
-    '/user/register-result': {
-      component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
@@ -111,7 +102,6 @@ export const getRouterData = app => {
   // The route matches the menu
   Object.keys(routerConfig).forEach(path => {
     // Regular match item name
-    // eg.  router /user/:id === /user/chen
     const pathRegexp = pathToRegexp(path);
     const menuKey = Object.keys(menuData).find(key => pathRegexp.test(`${key}`));
     let menuItem = {};

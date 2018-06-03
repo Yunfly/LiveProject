@@ -2,29 +2,21 @@ import { isUrl } from '../utils/utils';
 
 const menuData = [
   {
-    name: '异常页',
-    icon: 'warning',
-    path: 'exception/403',
-    // children: [
-    //   {
-    //     name: '403',
-    //     path: '403',
-    //   },
-    //   {
-    //     name: '404',
-    //     path: '404',
-    //   },
-    //   {
-    //     name: '500',
-    //     path: '500',
-    //   },
-    //   {
-    //     name: '触发异常',
-    //     path: 'trigger',
-    //     hideInMenu: true,
-    //   },
-    // ],
-  },
+    name: '首页',
+    path: '',
+  },{
+    name: '用户中心',
+    path: 'client',
+  },{
+    name: '充值',
+    path: 'charge',
+  },{
+    name: '直播',
+    path: 'live',
+  },{
+    name: '客服',
+    path: 'customService',
+  }
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {

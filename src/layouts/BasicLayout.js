@@ -6,10 +6,13 @@ import { Route, Redirect, Switch, routerRedux } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
+
+import loginModal from '@/modals/UserLogin/index'
+
 import NotFound from '../routes/Exception/404';
 import { getRoutes } from '../utils/utils';
 import { getMenuData } from '../common/menu';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import styles from './BasicLayout.less';
 
 const { Content, Header, Footer } = Layout;
@@ -36,7 +39,10 @@ const query = {
   },
 };
 
-class BasicLayout extends React.PureComponent {
+@connect(({ user }) => ({
+  user,
+}))
+export default class BasicLayout extends React.PureComponent {
   componentDidMount() {
     this.props.dispatch({
       type: 'user/fetchCurrent',
@@ -61,7 +67,13 @@ class BasicLayout extends React.PureComponent {
   handleClick = ({ key }) => {
     this.props.dispatch(routerRedux.push(key));
   };
+
   handleMenuClick = ({ key }) => {
+    if (key === 'login') {
+      return loginModal({
+        dispatch: this.props.dispatch
+      })
+    }
     if (key === 'triggerError') {
       this.props.dispatch(routerRedux.push('/exception/trigger'));
       return;
@@ -73,19 +85,15 @@ class BasicLayout extends React.PureComponent {
     }
   };
   render() {
-    const { currentUser, routerData, match } = this.props;
+    const { routerData, match, user: { currentUser } } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.handleMenuClick}>
-        <Menu.Item disabled>
-          <Icon type="user" />个人中心
+        <Menu.Item key="login" >
+          <Icon type="user" />登录
         </Menu.Item>
         <Menu.Item disabled>
           <Icon type="setting" />设置
         </Menu.Item>
-        <Menu.Item key="triggerError">
-          <Icon type="close-circle" />触发报错
-        </Menu.Item>
-        <Menu.Divider />
         <Menu.Item key="logout">
           <Icon type="logout" />退出登录
         </Menu.Item>
@@ -95,13 +103,13 @@ class BasicLayout extends React.PureComponent {
       <Layout>
         <Layout>
           <Header className={styles.header}>
-            <Row type="flex" justify="space-between">
+            <img src={logo} alt="logo" style={{ float: 'left', marginTop: 10 }} />
+            <Row type="flex" justify="center">
               <Col>
                 <Menu
-                  theme="dark"
                   mode="horizontal"
+                  defaultSelectedKeys={[location.pathname]}
                   onClick={this.handleClick}
-                  defaultSelectedKeys={['2']}
                   style={{ lineHeight: '64px' }}
                 >
                   {getMenuData().map(x => {
@@ -125,18 +133,18 @@ class BasicLayout extends React.PureComponent {
                   })}
                 </Menu>
               </Col>
-              <Col>
+              <Col style={{ position: "absolute", right: 100 }}>
                 <Dropdown overlay={menu}>
                   <div className={`${styles.action} ${styles.account}`}>
-                    <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
-                    <span className={styles.name}>{currentUser.name}</span>
+                    <Avatar className={styles.avatar} src={currentUser.headimg} />
+                    <span className={styles.name}>{currentUser.nickname || '未登录'}</span>
                   </div>
                 </Dropdown>
               </Col>
             </Row>
           </Header>
           <Content className={styles.content} style={{ padding: '0 50px', marginTop: 84 }}>
-            <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
+            <div style={{ minHeight: '78vh' }}>
               <Switch>
                 {getRoutes(match.path, routerData).map(item => {
                   return (
@@ -169,7 +177,6 @@ class BasicLayout extends React.PureComponent {
         </Layout>
       </Layout>
     );
-
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <ContainerQuery query={query}>
@@ -180,9 +187,3 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ user, global, loading }) => ({
-  currentUser: user.currentUser,
-  collapsed: global.collapsed,
-  fetchingNotices: loading.effects['global/fetchNotices'],
-  notices: global.notices,
-}))(BasicLayout);
