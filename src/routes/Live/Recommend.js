@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {Row,Col,Icon} from 'antd'
+import { Row, Col, Icon } from 'antd'
 import styles from './index.less'
 
 export default class componentName extends Component {
   render() {
-    const {cover,name,user,onClick} = this.props
+    const { cover, name, user, onClick, count_online } = this.props
     return (
       <div className={styles.recommendDetail}>
         <Row type="flex" justify="space-between">
@@ -18,7 +18,7 @@ export default class componentName extends Component {
                 {user.nickname}
               </Col>
               <Col>
-                <Icon type="play-circle" /> 1321321
+                <Icon type="play-circle" /> {count_online}
               </Col>
 
             </Row>
