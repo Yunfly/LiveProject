@@ -85,7 +85,6 @@ export default function request(url, options) {
     method: options && options.method ? options.method : 'get',
     data: (options && options.body) || {},
     timeout: 15000,
-    baseURL: 'http://zb-admin.runger.net',
     ...newOptions,
   })
     .then(checkStatus)
