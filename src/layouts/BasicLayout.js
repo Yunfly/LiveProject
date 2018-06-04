@@ -9,7 +9,7 @@ import pathToRegexp from 'path-to-regexp';
 
 import loginModal from '@/modals/UserLogin/index'
 
-import NotFound from '../routes/Exception/404';
+import NotFound from '../routes/Exception/403';
 import { getRoutes } from '../utils/utils';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.png';
@@ -143,27 +143,29 @@ export default class BasicLayout extends React.PureComponent {
               </Col>
             </Row>
           </Header>
-          <Content className={styles.content} style={{ padding: '0 50px', marginTop: 84 }}>
+          <Content className={styles[location.pathname==='/home'?'contentBlack':'content']}>
             <div style={{ minHeight: '78vh' }}>
-              <Switch>
-                {getRoutes(match.path, routerData).map(item => {
-                  return (
-                    <Route
-                      key={item.key}
-                      path={item.path}
-                      component={item.component}
-                      exact={item.exact}
-                      redirectPath="/exception/404"
-                    />
-                  );
-                })}
-                <Redirect to="/exception/404" />
-                <Route render={NotFound} />
-              </Switch>
+              {currentUser.id ? (
+                <Switch>
+                  {getRoutes(match.path, routerData).map(item => {
+                    return (
+                      <Route
+                        key={item.key}
+                        path={item.path}
+                        component={item.component}
+                        exact={item.exact}
+                        redirectPath="/home"
+                      />
+                    );
+                  })}
+                  <Redirect to="/home" />
+                  <Route render={NotFound} />
+                </Switch>) : (<NotFound />)}
+
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            <Row type="flex" justify="center">
+          <Footer style={{ textAlign: 'center',background:location.pathname==='/home'?'#fff':'#f4f7fa' }}>
+            <Row type="flex" justify="center" style={{fontSize:12}}>
               <Col span={24}>
                 信息网络传播视听节目许可证：0908328号 经营证券期货业务许可证编号：913101046312860336
               </Col>

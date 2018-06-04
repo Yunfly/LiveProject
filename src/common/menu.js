@@ -3,7 +3,7 @@ import { isUrl } from '../utils/utils';
 const menuData = [
   {
     name: '首页',
-    path: '',
+    path: 'home',
   },{
     name: '用户中心',
     path: 'client',
