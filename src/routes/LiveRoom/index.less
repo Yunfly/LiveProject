@@ -1,6 +1,49 @@
 .normal {
-    padding: 24px;
-    background: #fff;
+    .content {
+        background: #fff;
+        padding: 20px;
+        box-sizing: border-box;
+        height: 122px;
+    }
+    .name {
+        mix-blend-mode: undefined;
+        font-family: MicrosoftYaHei;
+        font-size: 24px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 0.92;
+        letter-spacing: 0.6px;
+        text-align: left;
+        color: #424242;
+    }
+    .liveinfo {
+        margin-left: 10px;
+    }
+    .info {
+        margin-top: 17px;
+        color: #8a8a8a;
+        p {
+            mix-blend-mode: undefined;
+            font-family: PingFang-SC;
+            margin-bottom: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            letter-spacing: 0.4px;
+            text-align: left;
+            color: #424242;
+        }
+    }
+    .share {
+        margin-top: 17px;
+        color: #424242;
+        span {
+            font-size: 16px;
+            color: #424242;
+        }
+    }
     .PlayerCase {
         position: relative;
     }
@@ -12,24 +55,44 @@
     .roomMes {
         position: relative;
         background: #fff;
-        height: 80px;
         margin-bottom: 10px;
         border: 1px solid #e5e4e4;
         border-radius: 4px;
+        z-index: 9;
         zoom: 1;
+        img {
+            width: 100%;
+        }
     }
     .PlayerCaseLeft {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
+        background: #fff;
         width: 336px;
         z-index: 1;
+        .catRoom {
+            background: #fff;
+            border: 1px solid #eee;
+            height: 100%;
+            padding: 5px 10px;
+        }
     }
-}
-
-.catRoom {
-    border: 1px solid #eee;
-    height: 100%;
-    padding: 5px 10px;
+    .control {
+        position: absolute;
+        margin-top: -30px;
+        color: #fff;
+        left: 100px;
+        button {
+            background: #8e8e8e;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 12px;
+            padding: 3px 10px;
+            outline: none;
+            cursor: pointer;
+        }
+    }
 }

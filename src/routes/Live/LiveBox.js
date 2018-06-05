@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Row, Col, Avatar } from 'antd'
 import qq from '@/assets/icon-qq.png'
-import moment from 'moment'
 import wechat from '@/assets/icon-wechat.png'
+import moment from 'moment'
+
 
 import styles from './index.less'
 
